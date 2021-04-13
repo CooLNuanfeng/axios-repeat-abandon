@@ -1,0 +1,25 @@
+{
+  "name": "axios-repeat-abandon",
+  "version": "1.0.0",
+  "description": "axios repeat abandon helper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CooLNuanfeng/axios-repeat-abandon.git"
+  },
+  "keywords": [
+    "axios",
+    "repeat",
+    "request",
+    "abandon"
+  ],
+  "author": "coolnuanfeng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CooLNuanfeng/axios-repeat-abandon/issues"
+  },
+  "homepage": "https://github.com/CooLNuanfeng/axios-repeat-abandon#readme"
+}
