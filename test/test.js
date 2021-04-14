@@ -1,3 +1,4 @@
 
-var p = new AxiosRepeatAbandon('blue');
-console.log(p)
+AxiosRepeatAbandon('axios',{
+  time: 400
+});
