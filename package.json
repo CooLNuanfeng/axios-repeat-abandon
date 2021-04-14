@@ -2,9 +2,10 @@
   "name": "axios-repeat-abandon",
   "version": "1.0.0",
   "description": "axios repeat abandon helper",
-  "main": "index.js",
+  "main": "./dist/axios-repeat-abandon.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "NODE_ENV=development webpack --config webpack.config.js --mode=development -w",
+    "build": "NODE_ENV=production webpack --config webpack.config.js --mode=production"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,14 @@
   "bugs": {
     "url": "https://github.com/CooLNuanfeng/axios-repeat-abandon/issues"
   },
-  "homepage": "https://github.com/CooLNuanfeng/axios-repeat-abandon#readme"
+  "homepage": "https://github.com/CooLNuanfeng/axios-repeat-abandon#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^5.32.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  }
 }

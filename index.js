@@ -1,3 +1,6 @@
-exports.init = function(){
-  console.log('axios repeat abandon helper')
+export default class AxiosRepeatAbandon {
+  constructor(axios, config){
+    this.config = config
+    this.axios = axios
+  }
 }
