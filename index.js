@@ -15,10 +15,11 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
   }
 
   axios.interceptors.request.use((config) => {
-      console.log(config,'request config')
-      let curTime = new Date().getTime()
-      removeRequest(config, curTime, repeatAbandonConfig.time); 
-      addRequest(config, axios);
+      removeRequest(config, {curTime: new Date().getTime(),limitTime: repeatAbandonConfig.time});
+      addRequest(config, axios, {
+        curTime: new Date().getTime(), 
+        limitTime:repeatAbandonConfig.time
+      });
       return config;
     },
     (error) => {
@@ -27,11 +28,11 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
   );
 
   axios.interceptors.response.use((response) => {
-      removeRequest(response.config); 
+      let curTime = new Date().getTime()
+      removeRequest(response.config, {curTime,limitTime: repeatAbandonConfig.time}); 
       return response;
     },
     (error) => {
-      removeRequest(error.config || {});
       if (axios.isCancel(error)) {
         console.log("已取消的重复请求：" + error.message);
       } else {
