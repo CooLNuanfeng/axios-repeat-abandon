@@ -9,32 +9,26 @@ export const generateReqKey = (config, name) => {
 }
 
 export const addRequest = (config, axios, {curTime, limitTime}) => {
-  const requestKey = generateReqKey(config, 'add');
-  if (requestMap.has(requestKey)) {
-    const {cancel, oldReqTime} = requestMap.get(requestKey);
-    if(curTime && (curTime - oldReqTime < limitTime)){
-      cancel(requestKey);
-    }
-  }else{
-    console.log('============')
-    config.cancelToken =
-      config.cancelToken ||
-      new axios.CancelToken((cancel) => {
-        requestMap.set(requestKey, {
-          cancel,
-          oldReqTime: new Date().getTime()
-        });
+  const requestKey = generateReqKey(config, '+++');
+  console.log('+++++++++++++')
+  config.cancelToken = new axios.CancelToken((cancel) => {
+    if(!requestMap.has(requestKey)){
+      requestMap.set(requestKey, {
+        cancel,
+        oldReqTime: new Date().getTime()
       });
-  }
+    }
+  });
   
 }
 
-export const removeRequest = (config, {curTime, limitTime}) => {
-  const requestKey = generateReqKey(config, 'remove');
+export const removeRequest = (config, {curTime, limitTime, type}) => {
+  const requestKey = generateReqKey(config, '---');
   if (requestMap.has(requestKey)) {
-    console.log('++++++++++')
+    console.log('--------------',type)
     const {cancel, oldReqTime} = requestMap.get(requestKey);
     if(curTime && (curTime - oldReqTime < limitTime)){
+      console.log('bbb',cancel)
       cancel(requestKey);
     }
     requestMap.delete(requestKey);

@@ -18,7 +18,7 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
       removeRequest(config, {curTime: new Date().getTime(),limitTime: repeatAbandonConfig.time});
       addRequest(config, axios, {
         curTime: new Date().getTime(), 
-        limitTime:repeatAbandonConfig.time
+        limitTime: repeatAbandonConfig.time
       });
       return config;
     },
@@ -29,7 +29,7 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
 
   axios.interceptors.response.use((response) => {
       let curTime = new Date().getTime()
-      removeRequest(response.config, {curTime,limitTime: repeatAbandonConfig.time}); 
+      removeRequest(response.config, {curTime,limitTime: repeatAbandonConfig.time, type: 'reponse'}); 
       return response;
     },
     (error) => {
