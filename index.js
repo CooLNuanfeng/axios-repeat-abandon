@@ -32,7 +32,7 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
       if (requestMap.has(requestKey)) {
         const {cancel, oldReqTime, isFirst} = requestMap.get(requestKey);
         let curTime = new Date().getTime()
-        console.log('=====request======',curTime - oldReqTime, isFirst)
+        console.log('=====request======',curTime - oldReqTime)
         if( !isFirst && (curTime - oldReqTime < repeatAbandonConfig.time)){
           console.log('cancel')
           cancel(requestKey)
