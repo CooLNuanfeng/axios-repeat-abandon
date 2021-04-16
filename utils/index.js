@@ -10,27 +10,36 @@ export const generateReqKey = (config, name) => {
 
 export const addRequest = (config, axios, {curTime, limitTime}) => {
   const requestKey = generateReqKey(config, '+++');
-  console.log('+++++++++++++')
-  config.cancelToken = new axios.CancelToken((cancel) => {
-    if(!requestMap.has(requestKey)){
+  if(!requestMap.has(requestKey)){
+    console.log(111111)
+    config.cancelToken = new axios.CancelToken((cancel) => {
       requestMap.set(requestKey, {
         cancel,
-        oldReqTime: new Date().getTime()
+        oldReqTime: curTime,
+        isFirst: true
       });
-    }
-  });
+    });
+  }else{
+    const {cancel, oldReqTime} = requestMap.get(requestKey);
+    requestMap.set(requestKey, {
+      cancel,
+      oldReqTime: oldReqTime,
+      isFirst: false
+    });
+  }
+  
   
 }
 
 export const removeRequest = (config, {curTime, limitTime, type}) => {
   const requestKey = generateReqKey(config, '---');
   if (requestMap.has(requestKey)) {
-    console.log('--------------',type)
-    const {cancel, oldReqTime} = requestMap.get(requestKey);
-    if(curTime && (curTime - oldReqTime < limitTime)){
-      console.log('bbb',cancel)
-      cancel(requestKey);
-    }
+    // console.log('--------------',type)
+    // const {cancel, oldReqTime} = requestMap.get(requestKey);
+    // if(curTime - oldReqTime < limitTime){
+    //   console.log('bbb')
+    //   cancel(requestKey);
+    // }
     requestMap.delete(requestKey);
   }
 }
