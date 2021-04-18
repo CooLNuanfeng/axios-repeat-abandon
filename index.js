@@ -1,45 +1,56 @@
 import {
   generateReqKey,
   addRequest,
-  removeRequest,
   requestMap
 } from './utils'
 
 
-
 const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
-  time: 50
+  time: 800
 }) => {
   if(!axios){
     console.warn('axios is request')
     return;
   }
 
-
   let reqtmp = axios.Axios.prototype.request;
   axios.Axios.prototype.request = function(config){
-    // removeRequest(config, {curTime:new Date().getTime(),limitTime: repeatAbandonConfig.time, type: ''}); 
-    addRequest(config, axios, {
-      curTime: new Date().getTime(), 
-      limitTime: repeatAbandonConfig.time
-    });
+    if(!config.cancelRepeat){
+      const requestKey = generateReqKey(config);
+      if(requestMap.has(requestKey)){
+        const {oldReqTime} = requestMap.get(requestKey);
+        let curTime = new Date().getTime()
+        if(curTime - oldReqTime < repeatAbandonConfig.time){
+          requestMap.set(requestKey,{
+            oldReqTime: curTime,
+            isCancel: true
+          })
+        }else{
+          requestMap.set(requestKey,{
+            oldReqTime: curTime
+          })
+        }
+      }else{
+        addRequest(config, {
+          curTime: new Date().getTime(), 
+          limitTime: repeatAbandonConfig.time
+        });
+      }
+    }
     return reqtmp.call(this,config)
   }
 
 
   axios.interceptors.request.use((config) => {
-      const requestKey = generateReqKey(config, 'request');
-      if (requestMap.has(requestKey)) {
-        const {cancel, oldReqTime, isFirst} = requestMap.get(requestKey);
-        let curTime = new Date().getTime()
-        console.log('=====request======',curTime - oldReqTime, isFirst)
-        if(!isFirst && (curTime - oldReqTime < repeatAbandonConfig.time)){
-          console.log('cancel')
-          cancel(requestKey)
-        }else{
-          requestMap.delete(requestKey);
-        }
+    if(!config.cancelRepeat){
+      const requestKey = generateReqKey(config);
+      const {isCancel} = requestMap.get(requestKey);
+      if(isCancel){
+        config.cancelToken = new axios.CancelToken((cancel) => {
+          cancel('重复请求');
+        });
       }
+    }
       return config;
     },
     (error) => {
@@ -48,9 +59,7 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
   );
   
 
-  axios.interceptors.response.use((response) => {
-      // let curTime = new Date().getTime()
-      // removeRequest(response.config, {curTime,limitTime: repeatAbandonConfig.time, type: 'reponse'}); 
+  axios.interceptors.response.use((response) => { 
       return response;
     },
     (error) => {
