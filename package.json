@@ -1,7 +1,7 @@
 {
   "name": "axios-repeat-abandon",
   "version": "1.0.2",
-  "description": "axios repeat abandon helper",
+  "description": "an axios cancel repeated request helper",
   "main": "./dist/axios-repeat-abandon.js",
   "scripts": {
     "dev": "NODE_ENV=development webpack --config webpack.config.js --mode=development -w",
@@ -13,9 +13,9 @@
   },
   "keywords": [
     "axios",
-    "repeat",
-    "request",
-    "abandon"
+    "cancel repeated request",
+    "abandon repeated request",
+    "Anti-connect point"
   ],
   "author": "coolnuanfeng",
   "license": "ISC",

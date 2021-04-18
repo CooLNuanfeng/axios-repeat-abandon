@@ -5,11 +5,13 @@ Cancel axios repeated request
 
 English | [简体中文](./README_CN.md)
 
-# Installing
+
+
+# 安装
 
   npm install axios-repeat-abandon
 
-# Usage
+# 使用
 
   ```
   import axios from 'axios'
@@ -20,17 +22,15 @@ English | [简体中文](./README_CN.md)
   })
   ```
 
-# config
+# 配置
 
-- time: Identified as the number of milliseconds repeat request, default time 800 millisecond
-- cancelRepeat: Cancel a repeat request limit,  Not open by default
-
-
-# example
+- time: 认定为重复请求的时间间隔, 默认800毫秒
+- cancelRepeat: 是否取消本次的重复请求限制，默认 false 不开启
 
 
-  No restrictions on this request
+# 示例
 
+  对本次请求不限制重复请求
   ```
     axios.get(url,{
       cancelRepeat: true
