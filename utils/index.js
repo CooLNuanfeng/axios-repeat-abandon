@@ -11,7 +11,6 @@ export const generateReqKey = (config, name) => {
 export const addRequest = (config, axios, {curTime, limitTime}) => {
   const requestKey = generateReqKey(config, '+++');
   if(!requestMap.has(requestKey)){
-    console.log(111111)
     config.cancelToken = new axios.CancelToken((cancel) => {
       requestMap.set(requestKey, {
         cancel,
@@ -21,6 +20,7 @@ export const addRequest = (config, axios, {curTime, limitTime}) => {
     });
   }else{
     const {cancel, oldReqTime} = requestMap.get(requestKey);
+    console.log(oldReqTime)
     requestMap.set(requestKey, {
       cancel,
       oldReqTime: oldReqTime,
