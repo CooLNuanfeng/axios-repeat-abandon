@@ -44,7 +44,7 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
   axios.interceptors.request.use((config) => {
     if(!config.cancelRepeat){
       const requestKey = generateReqKey(config);
-      const {isCancel} = requestMap.get(requestKey);
+      const {isCancel} = requestMap.get(requestKey) || {isCancel: false};
       if(isCancel){
         config.cancelToken = new axios.CancelToken((cancel) => {
           cancel('重复请求');
