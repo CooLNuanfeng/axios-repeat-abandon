@@ -1,9 +1,9 @@
 # axios-repeat-abandon
 
-Cancel axios repeated request
+取消axios中的重复请求
 
 
-English | [简体中文](./README_CN.md)
+[English](./README.md) | 简体中文
 
 
 
