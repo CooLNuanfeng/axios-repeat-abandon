@@ -1,6 +1,6 @@
 {
   "name": "axios-repeat-abandon",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "an axios cancel repeated request helper",
   "main": "./dist/axios-repeat-abandon.js",
   "scripts": {
