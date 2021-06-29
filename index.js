@@ -47,7 +47,7 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
       const {isCancel} = requestMap.get(requestKey) || {isCancel: false};
       if(isCancel){
         config.cancelToken = new axios.CancelToken((cancel) => {
-          cancel('重复请求');
+          cancel('重复请求: '+ config.url);
         });
       }
     }
