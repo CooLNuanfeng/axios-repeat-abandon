@@ -6,7 +6,8 @@ import {
 
 
 const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
-  time: 800
+  time: 800,
+  cancelRepeat: false
 }) => {
   if(!axios){
     console.warn('axios is request')
@@ -15,7 +16,11 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
 
   let reqtmp = axios.Axios.prototype.request;
   axios.Axios.prototype.request = function(config){
-    if(!config.cancelRepeat){
+    if(config.cancelRepeat !== undefined){
+      repeatAbandonConfig.cancelRepeat = config.cancelRepeat
+    }
+
+    if(!repeatAbandonConfig.cancelRepeat){
       const requestKey = generateReqKey(config);
       if(requestMap.has(requestKey)){
         const {oldReqTime} = requestMap.get(requestKey);
@@ -42,7 +47,10 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
 
 
   axios.interceptors.request.use((config) => {
-    if(!config.cancelRepeat){
+    if(config.cancelRepeat !== undefined){
+      repeatAbandonConfig.cancelRepeat = config.cancelRepeat
+    }
+    if(!repeatAbandonConfig.cancelRepeat){
       const requestKey = generateReqKey(config);
       const {isCancel} = requestMap.get(requestKey) || {isCancel: false};
       if(isCancel){

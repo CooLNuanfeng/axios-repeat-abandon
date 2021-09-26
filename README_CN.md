@@ -18,14 +18,14 @@
   import axiosRepeatAbandon from 'axios-repeat-abandon'
   
   axiosRepeatAbandon(axios,{
-    time: 800
+    time: 800，
   })
   ```
 
 # 配置
 
 - time: 认定为重复请求的时间间隔, 默认800毫秒
-- cancelRepeat: 是否取消本次的重复请求限制，默认 false 不开启
+- cancelRepeat: 是否取消重复请求限制，总配置，默认 false 不开启, 单次请求可覆盖该全局配置，即如下示例
 
 
 # 示例

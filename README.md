@@ -17,13 +17,14 @@ English | [简体中文](./README_CN.md)
   
   axiosRepeatAbandon(axios,{
     time: 800
+    cancelRepeat: false
   })
   ```
 
 # config
 
 - time: Identified as the number of milliseconds repeat request, default time 800 millisecond
-- cancelRepeat: Cancel a repeat request limit,  Not open by default
+- cancelRepeat: Whether to cancel the repeated request limit, the total configuration, the default false is not enabled, a single request can overwrite the global configuration, that is, the following example
 
 
 # example
