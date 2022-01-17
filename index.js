@@ -15,7 +15,7 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
   }
 
   let reqtmp = axios.Axios.prototype.request;
-  axios.Axios.prototype.request = function(config){
+  axios.request = axios.Axios.prototype.request = function(config){
     if(config.cancelRepeat !== undefined){
       repeatAbandonConfig.cancelRepeat = config.cancelRepeat
     }

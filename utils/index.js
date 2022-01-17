@@ -3,7 +3,7 @@ export const requestMap = new Map();
 
 export const generateReqKey = (config) => {
   const { method, url, params, data } = config;
-  let key = [method, url, Qs.stringify(params), Qs.stringify(data)].join(":");
+  let key = [method.toLowerCase(), url, Qs.stringify(params), Qs.stringify(data)].join(":");
   return key
 }
 
