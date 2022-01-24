@@ -1,7 +1,8 @@
 
 (function(){
   AxiosRepeatAbandon(axios,{
-    time: 400
+    time: 400,
+    openSwitch: true
   });
 
   $('#btn').on('click',function(){

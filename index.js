@@ -5,10 +5,7 @@ import {
 } from './utils'
 
 
-const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
-  time: 800,
-  cancelRepeat: false
-}) => {
+const axiosRepeatAbandon = (axios, { time = 800, openSwitch = true }) => {
   if(!axios){
     console.warn('axios is request')
     return;
@@ -17,15 +14,15 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
   let reqtmp = axios.Axios.prototype.request;
   axios.request = axios.Axios.prototype.request = function(config){
     if(config.cancelRepeat !== undefined){
-      repeatAbandonConfig.cancelRepeat = config.cancelRepeat
+      openSwitch = config.cancelRepeat
     }
 
-    if(!repeatAbandonConfig.cancelRepeat){
+    if(openSwitch){
       const requestKey = generateReqKey(config);
       if(requestMap.has(requestKey)){
         const {oldReqTime} = requestMap.get(requestKey);
         let curTime = new Date().getTime()
-        if(curTime - oldReqTime < repeatAbandonConfig.time){
+        if(curTime - oldReqTime < time){
           requestMap.set(requestKey,{
             oldReqTime: curTime,
             isCancel: true
@@ -38,7 +35,7 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
       }else{
         addRequest(config, {
           curTime: new Date().getTime(), 
-          limitTime: repeatAbandonConfig.time
+          limitTime: time
         });
       }
     }
@@ -48,9 +45,9 @@ const axiosRepeatAbandon = (axios, repeatAbandonConfig = {
 
   axios.interceptors.request.use((config) => {
     if(config.cancelRepeat !== undefined){
-      repeatAbandonConfig.cancelRepeat = config.cancelRepeat
+      openSwitch = config.cancelRepeat
     }
-    if(!repeatAbandonConfig.cancelRepeat){
+    if(openSwitch){
       const requestKey = generateReqKey(config);
       const {isCancel} = requestMap.get(requestKey) || {isCancel: false};
       if(isCancel){
