@@ -1,5 +1,5 @@
 declare const axiosRepeatAbandon: (axios: Function, config?: {
-  time: number,
+  time?: number,
   openSwitch?: boolean
 }) => void
 
