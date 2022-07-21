@@ -10,7 +10,7 @@ const axiosRepeatAbandon = (axios, { time = 800, openSwitch = true }) => {
     console.warn('axios is request')
     return;
   }
-
+  
   let reqtmp = axios.Axios.prototype.request;
   axios.request = axios.Axios.prototype.request = function(config){
     if(config.cancelRepeat !== undefined){

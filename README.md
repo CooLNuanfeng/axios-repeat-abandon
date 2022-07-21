@@ -21,6 +21,14 @@ English | [简体中文](./README_CN.md)
   })
   ```
 
+  ```
+    var http = axios.create()
+    Object.setPrototypeOf(http, axios)
+    AxiosRepeatAbandon(http,{
+      time: 400
+    });
+  ```
+
 # config
 
 - time: Identified as the number of milliseconds repeat request, default time 800 millisecond

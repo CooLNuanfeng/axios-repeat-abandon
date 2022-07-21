@@ -23,6 +23,14 @@
   })
   ```
 
+  ```
+    var http = axios.create()
+    Object.setPrototypeOf(http, axios)
+    AxiosRepeatAbandon(http,{
+      time: 400
+    });
+  ```
+
 # 配置
 
 - time: 认定为重复请求的时间间隔, 默认800毫秒

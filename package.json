@@ -3,6 +3,7 @@
   "version": "1.0.10",
   "description": "an axios cancel repeated request helper",
   "main": "./dist/axios-repeat-abandon.js",
+  "types": "index.d.ts",
   "scripts": {
     "dev": "NODE_ENV=development webpack --config webpack.config.js --mode=development -w",
     "build": "NODE_ENV=production webpack --config webpack.config.js --mode=production"
