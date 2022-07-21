@@ -404,13 +404,9 @@ export interface AxiosStatic extends AxiosInstance {
   formToJSON(form: GenericFormData|GenericHTMLFormElement): object;
 }
 
-interface repeatAbandonConfig {
+declare const axiosRepeatAbandon: (axios: Function, config?: {
   time: number,
   openSwitch?: boolean
-}
-
-declare const axios: AxiosStatic;
-
-declare const axiosRepeatAbandon: (axios: AxiosInstance, config?: repeatAbandonConfig) => void
+}) => void
 
 export default axiosRepeatAbandon
