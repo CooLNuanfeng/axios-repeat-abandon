@@ -406,11 +406,11 @@ export interface AxiosStatic extends AxiosInstance {
 
 interface repeatAbandonConfig {
   time: number,
-  cancelRepeat?: boolean
+  openSwitch?: boolean
 }
 
 declare const axios: AxiosStatic;
 
-declare const axiosRepeatAbandon: (axios: AxiosStatic, config?: repeatAbandonConfig) => void
+declare const axiosRepeatAbandon: (axios: AxiosInstance, config?: repeatAbandonConfig) => void
 
 export default axiosRepeatAbandon
