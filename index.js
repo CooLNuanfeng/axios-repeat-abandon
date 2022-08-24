@@ -13,8 +13,8 @@ const axiosRepeatAbandon = (axios, { time = 800, openSwitch = true }) => {
   
   let reqtmp = axios.Axios.prototype.request;
   axios.request = axios.Axios.prototype.request = function(config){
-    if(config.cancelRepeat == false){
-      openSwitch = config.cancelRepeat
+    if(openSwitch && config.cancelRepeat === false){
+      return reqtmp.call(this,config)
     }
 
     if(openSwitch || config.cancelRepeat){
@@ -44,19 +44,19 @@ const axiosRepeatAbandon = (axios, { time = 800, openSwitch = true }) => {
 
 
   axios.interceptors.request.use((config) => {
-    if(config.cancelRepeat === false){
-      openSwitch = config.cancelRepeat
-    }
-    // console.log('++++++++++cancelRepeat===>', config.cancelRepeat)
-    if(openSwitch || config.cancelRepeat){
-      const requestKey = generateReqKey(config);
-      const {isCancel} = requestMap.get(requestKey) || {isCancel: false};
-      if(isCancel){
-        config.cancelToken = new axios.CancelToken((cancel) => {
-          cancel('重复请求: '+ config.url);
-        });
+      if(openSwitch && config.cancelRepeat === false){
+        return config;
       }
-    }
+      // console.log('@@@@@@@@cancelRepeat===>', config.cancelRepeat)
+      if(openSwitch || config.cancelRepeat){
+        const requestKey = generateReqKey(config);
+        const {isCancel} = requestMap.get(requestKey) || {isCancel: false};
+        if(isCancel){
+          config.cancelToken = new axios.CancelToken((cancel) => {
+            cancel('重复请求: '+ config.url);
+          });
+        }
+      }
       return config;
     },
     (error) => {
