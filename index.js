@@ -13,11 +13,11 @@ const axiosRepeatAbandon = (axios, { time = 800, openSwitch = true }) => {
   
   let reqtmp = axios.Axios.prototype.request;
   axios.request = axios.Axios.prototype.request = function(config){
-    if(config.cancelRepeat !== undefined){
+    if(config.cancelRepeat == false){
       openSwitch = config.cancelRepeat
     }
 
-    if(openSwitch){
+    if(openSwitch || config.cancelRepeat){
       const requestKey = generateReqKey(config);
       if(requestMap.has(requestKey)){
         const {oldReqTime} = requestMap.get(requestKey);
@@ -44,10 +44,11 @@ const axiosRepeatAbandon = (axios, { time = 800, openSwitch = true }) => {
 
 
   axios.interceptors.request.use((config) => {
-    if(config.cancelRepeat !== undefined){
+    if(config.cancelRepeat === false){
       openSwitch = config.cancelRepeat
     }
-    if(openSwitch){
+    // console.log('++++++++++cancelRepeat===>', config.cancelRepeat)
+    if(openSwitch || config.cancelRepeat){
       const requestKey = generateReqKey(config);
       const {isCancel} = requestMap.get(requestKey) || {isCancel: false};
       if(isCancel){
