@@ -3,4 +3,6 @@ declare const axiosRepeatAbandon: (axios: Function, config?: {
   openSwitch?: boolean
 }) => void
 
+
 export default axiosRepeatAbandon
+
